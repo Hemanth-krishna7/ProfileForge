@@ -109,7 +109,7 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <header className="max-w-4xl mx-auto text-center px-6 pt-5 pb-3 animate-fadeIn">
+      <header className="max-w-4xl mx-auto text-center px-6 pt-3.5 pb-1 animate-fadeIn">
         <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-violet-50 border border-violet-100/70 text-violet-750 text-[10px] font-bold mb-2">
           <span className="w-1.2 h-1.2 rounded-full bg-violet-500 animate-ping"></span>
           <span>Profile Builder</span>
@@ -126,7 +126,7 @@ export default function App() {
       </header>
 
       {/* Main Grid Container */}
-      <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 pb-10">
+      <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 pt-1 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column - Form Card */}
@@ -161,11 +161,11 @@ export default function App() {
             {/* Visual Status Indicator */}
             <div className="text-center mb-5 w-full">
               <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">
-                {generatedProfile ? 'Your Generated Profile Card' : 'Live Preview'}
+                {generatedProfile ? 'PROFILE CARD GENERATED' : 'Live Preview'}
               </h3>
               <p className="text-[11px] text-slate-400 mt-0.5 font-medium">
                 {generatedProfile 
-                  ? 'Your profile card is ready!' 
+                  ? 'Ready to share and showcase.' 
                   : 'Updates in real-time as you type.'
                 }
               </p>
