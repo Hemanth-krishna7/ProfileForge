@@ -16,9 +16,7 @@ export const createProfile = (req, res) => {
     errors.bio = 'Short Bio is required.';
   }
 
-  if (!imageUrl || imageUrl.trim() === '') {
-    errors.imageUrl = 'Profile Image URL is required.';
-  } else {
+  if (imageUrl && imageUrl.trim() !== '') {
     // Simple URL validation
     try {
       new URL(imageUrl);
@@ -75,7 +73,7 @@ export const createProfile = (req, res) => {
     profile: {
       name: name.trim(),
       bio: bio.trim(),
-      imageUrl: imageUrl.trim(),
+      imageUrl: imageUrl ? imageUrl.trim() : '',
       skills: processedSkills,
       github: processedGithub,
       linkedin: processedLinkedin,

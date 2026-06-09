@@ -109,29 +109,29 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <header className="max-w-4xl mx-auto text-center px-6 pt-12 pb-8 animate-fadeIn">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-100/70 text-violet-750 text-xs font-bold mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-ping"></span>
+      <header className="max-w-4xl mx-auto text-center px-6 pt-5 pb-3 animate-fadeIn">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-violet-50 border border-violet-100/70 text-violet-750 text-[10px] font-bold mb-2">
+          <span className="w-1.2 h-1.2 rounded-full bg-violet-500 animate-ping"></span>
           <span>Profile Builder</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.15] mb-4">
+        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-none mb-2">
           Create Professional{' '}
           <span className="bg-gradient-to-r from-violet-600 to-indigo-650 bg-clip-text text-transparent">
             Profile Cards
           </span>
         </h1>
-        <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed">
+        <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto font-medium leading-relaxed">
           Instantly build and showcase a polished professional profile card. Enter your details, choose a theme, and generate a shareable digital card.
         </p>
       </header>
 
       {/* Main Grid Container */}
-      <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 pb-16">
+      <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column - Form Card */}
-          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-100/80 shadow-md shadow-slate-100/50 space-y-6">
-            <div className="border-b border-slate-100 pb-4">
+          <div className="lg:col-span-7 bg-white p-5 sm:p-6 rounded-2xl border border-slate-100/80 shadow-md shadow-slate-100/50 space-y-5">
+            <div className="border-b border-slate-100 pb-3">
               <h2 className="text-md font-bold text-slate-900">Profile Details</h2>
               <p className="text-xs text-slate-500 mt-1">
                 Provide your name, bio, image, skills, and social links.

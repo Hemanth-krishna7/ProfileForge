@@ -39,13 +39,13 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
       errMessage = 'Full Name is required.';
     } else if (name === 'bio' && (!value || value.trim() === '')) {
       errMessage = 'Short Bio is required.';
-    } else if (name === 'imageUrl' && (!value || value.trim() === '')) {
-      errMessage = 'Profile Image URL is required.';
     } else if (name === 'imageUrl') {
-      try {
-        new URL(value);
-      } catch (_) {
-        errMessage = 'Please enter a valid URL (e.g. https://...).';
+      if (value && value.trim() !== '') {
+        try {
+          new URL(value);
+        } catch (_) {
+          errMessage = 'Please enter a valid URL (e.g. https://...).';
+        }
       }
     }
 
@@ -59,7 +59,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Mark all required fields as touched
+    // Mark required fields as touched
     const allTouched = {
       name: true,
       bio: true,
@@ -78,9 +78,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
     if (!formData.bio || formData.bio.trim() === '') {
       newErrors.bio = 'Short Bio is required.';
     }
-    if (!formData.imageUrl || formData.imageUrl.trim() === '') {
-      newErrors.imageUrl = 'Profile Image URL is required.';
-    } else {
+    if (formData.imageUrl && formData.imageUrl.trim() !== '') {
       try {
         new URL(formData.imageUrl);
       } catch (_) {
@@ -97,9 +95,9 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 animate-fadeIn">
+    <form onSubmit={handleSubmit} className="space-y-6 animate-fadeIn">
       {/* SECTION 1: Personal Profile details */}
-      <div className="space-y-5 p-5 bg-slate-50/50 rounded-2xl border border-slate-100">
+      <div className="space-y-4 p-4.5 bg-slate-50/50 rounded-2xl border border-slate-100">
         <div className="flex items-center space-x-2 border-b border-slate-100 pb-2.5">
           <svg className="w-4.5 h-4.5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -119,7 +117,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
             value={formData.name}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="e.g. Alex Mercer"
+            placeholder="Enter your full name"
             className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 ${
               errors.name && touched.name
                 ? 'border-rose-300 focus:ring-rose-500/10 focus:border-rose-500 bg-rose-50/10'
@@ -143,7 +141,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
             value={formData.bio}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="e.g. Senior Full-Stack Engineer specializing in React, TypeScript, and clean code architecture."
+            placeholder="Write a short professional bio"
             className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 ${
               errors.bio && touched.bio
                 ? 'border-rose-300 focus:ring-rose-500/10 focus:border-rose-500 bg-rose-50/10'
@@ -158,7 +156,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
         {/* Image URL Input */}
         <div>
           <label htmlFor="imageUrl" className="block text-xs font-bold text-slate-700 mb-1.5">
-            Profile Image URL <span className="text-rose-500">*</span>
+            Profile Image URL
           </label>
           <input
             type="url"
@@ -167,7 +165,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
             value={formData.imageUrl}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="e.g. https://images.unsplash.com/photo-..."
+            placeholder="Paste profile image URL (optional)"
             className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 ${
               errors.imageUrl && touched.imageUrl
                 ? 'border-rose-300 focus:ring-rose-500/10 focus:border-rose-500 bg-rose-50/10'
@@ -181,7 +179,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
       </div>
 
       {/* SECTION 2: Skills & Tags */}
-      <div className="space-y-5 p-5 bg-slate-50/50 rounded-2xl border border-slate-100">
+      <div className="space-y-4 p-4.5 bg-slate-50/50 rounded-2xl border border-slate-100">
         <div className="flex items-center space-x-2 border-b border-slate-100 pb-2.5">
           <svg className="w-4.5 h-4.5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -200,7 +198,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
             name="skills"
             value={formData.skills}
             onChange={handleChange}
-            placeholder="e.g. React, Node.js, TypeScript, Go, Docker"
+            placeholder="Add skills separated by commas"
             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-violet-500/10 focus:border-violet-600 bg-white"
           />
           <p className="mt-1.5 text-[10px] text-slate-400 font-semibold">Separate multiple skills with commas.</p>
@@ -208,7 +206,7 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
       </div>
 
       {/* SECTION 3: Social Portfolios */}
-      <div className="space-y-5 p-5 bg-slate-50/50 rounded-2xl border border-slate-100">
+      <div className="space-y-4 p-4.5 bg-slate-50/50 rounded-2xl border border-slate-100">
         <div className="flex items-center space-x-2 border-b border-slate-100 pb-2.5">
           <svg className="w-4.5 h-4.5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />

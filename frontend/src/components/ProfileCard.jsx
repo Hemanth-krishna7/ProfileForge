@@ -27,36 +27,36 @@ export default function ProfileCard({ data, isPreview = false }) {
   const showSocial = github || linkedin;
 
   return (
-    <div className="relative group w-full max-w-[360px] mx-auto transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] animate-fadeIn">
-      {/* Dynamic Ambient Background Glow - Reduced intensity by 25% (opacity reduced to 25% or 30%) */}
-      <div className={`absolute -inset-1 rounded-[2.5rem] opacity-25 blur-2xl transition duration-700 group-hover:opacity-35 ${
+    <div className="relative group w-full max-w-[360px] mx-auto transition-all duration-300 hover:-translate-y-1 hover:scale-[1.005] animate-fadeIn">
+      {/* Dynamic Ambient Background Glow - Reduced intensity */}
+      <div className={`absolute -inset-0.5 rounded-[2.5rem] opacity-10 blur-xl transition duration-700 group-hover:opacity-15 ${
         isDark 
           ? 'bg-gradient-to-r from-violet-650 via-fuchsia-600 to-indigo-650' 
           : 'bg-gradient-to-r from-indigo-400 via-purple-400 to-sky-400'
       }`}></div>
 
       {/* Main Glassmorphic Card Container */}
-      <div className={`relative flex flex-col items-center p-8 rounded-[2rem] shadow-2xl transition-all duration-300 border backdrop-blur-xl ${
+      <div className={`relative flex flex-col items-center p-6 rounded-[1.75rem] shadow-lg transition-all duration-300 border backdrop-blur-xl ${
         isDark 
-          ? 'bg-slate-950/85 text-slate-100 border-slate-800/80 shadow-black/55' 
-          : 'bg-white/80 text-slate-800 border-white/60 shadow-slate-200/50'
+          ? 'bg-slate-950/85 text-slate-100 border-slate-800/80 shadow-black/25' 
+          : 'bg-white/80 text-slate-800 border-white/60 shadow-slate-200/25'
       }`}>
         
         {/* Status Indicator */}
-        <div className="absolute top-5 right-5">
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold tracking-widest uppercase border ${
+        <div className="absolute top-4.5 right-4.5">
+          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-bold tracking-wider uppercase border ${
             isPreview
-              ? 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400'
-              : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+              ? 'bg-amber-500/5 border-amber-500/15 text-amber-600 dark:text-amber-400'
+              : 'bg-emerald-500/5 border-emerald-500/15 text-emerald-600 dark:text-emerald-400'
           }`}>
-            {isPreview ? 'Live Preview' : 'GENERATED'}
+            {isPreview ? 'Preview' : 'GENERATED'}
           </span>
         </div>
 
         {/* Double-Ring Gradient Avatar Frame */}
-        <div className="relative mb-6 mt-2 group/avatar">
-          {/* Pulsing Outer Gradient Ring - Reduced by 25% from 60% to 45% */}
-          <div className={`absolute -inset-2 rounded-full opacity-45 blur-sm transition-transform duration-500 group-hover/avatar:scale-105 ${
+        <div className="relative mb-4.5 mt-1 group/avatar">
+          {/* Pulsing Outer Gradient Ring - Reduced intensity */}
+          <div className={`absolute -inset-1.5 rounded-full opacity-25 blur-xs transition-transform duration-500 group-hover/avatar:scale-102 ${
             isDark 
               ? 'bg-gradient-to-tr from-violet-600 to-indigo-600' 
               : 'bg-gradient-to-tr from-indigo-500 to-violet-500'
@@ -71,7 +71,6 @@ export default function ProfileCard({ data, isPreview = false }) {
               src={imageUrl}
               alt={displayName}
               onError={(e) => {
-                // Keep default placeholder state visual if image URL is invalid or fails to load
                 e.target.style.display = 'none';
                 const sibling = e.target.nextSibling;
                 if (sibling) sibling.style.display = 'flex';
@@ -80,42 +79,39 @@ export default function ProfileCard({ data, isPreview = false }) {
             />
           ) : null}
 
-          {/* Neutral Avatar Placeholder Icon and Label */}
+          {/* Neutral Avatar Placeholder Icon - No text inside or below */}
           <div 
             style={{ display: imageUrl ? 'none' : 'flex' }}
-            className={`relative w-26 h-26 rounded-full flex flex-col items-center justify-center p-2 z-10 border border-dashed ${
+            className={`relative w-26 h-26 rounded-full flex flex-col items-center justify-center z-10 border border-dashed ${
               isDark 
                 ? 'border-slate-800 bg-slate-900/60 text-slate-500' 
                 : 'border-slate-300 bg-slate-100/60 text-slate-400'
             }`}
           >
-            {/* User SVG silhouette */}
-            <svg className="w-8 h-8 opacity-50 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+            {/* User SVG silhouette (large user icon) */}
+            <svg className="w-11 h-11 opacity-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
-            <span className="text-[7.5px] font-bold text-center leading-[1.2] px-1 select-none">
-              Profile image will appear here.
-            </span>
           </div>
         </div>
 
         {/* Name */}
-        <h2 className={`text-xl font-bold tracking-tight text-center ${
+        <h2 className={`text-lg font-bold tracking-tight text-center ${
           isDark ? 'text-white' : 'text-slate-900'
         }`}>
           {displayName}
         </h2>
 
         {/* Bio Description */}
-        <p className={`mt-3 text-xs leading-relaxed text-center font-medium min-h-[54px] max-w-[280px] ${
+        <p className={`mt-2 text-xs leading-relaxed text-center font-medium min-h-[54px] max-w-[280px] ${
           isDark ? 'text-slate-400' : 'text-slate-550'
         }`}>
           {displayBio}
         </p>
 
         {/* Skills Section */}
-        <div className="w-full mt-6">
-          <h3 className={`text-[9px] font-bold uppercase tracking-widest text-left mb-3.5 ${
+        <div className="w-full mt-4">
+          <h3 className={`text-[9px] font-bold uppercase tracking-widest text-left mb-2 ${
             isDark ? 'text-slate-500' : 'text-slate-400'
           }`}>
             Skills
@@ -138,11 +134,11 @@ export default function ProfileCard({ data, isPreview = false }) {
             </div>
           ) : (
             /* Empty State Placeholder for Skills */
-            <div className={`py-4 px-3 rounded-2xl border border-dashed text-center ${
-              isDark ? 'border-slate-800/80 text-slate-550 bg-slate-950/20' : 'border-slate-200 text-slate-450 bg-slate-50/50'
-            }`}>
-              <span className="text-[10px] font-bold tracking-wide select-none">
-                Skills will appear here.
+            <div className="text-left py-1">
+              <span className={`text-[11px] font-semibold italic select-none ${
+                isDark ? 'text-slate-500' : 'text-slate-400'
+              }`}>
+                No skills added yet
               </span>
             </div>
           )}
@@ -150,7 +146,7 @@ export default function ProfileCard({ data, isPreview = false }) {
 
         {/* Action Button Links - Conditionally rendered only if links are supplied */}
         {showSocial && (
-          <div className="w-full mt-7 border-t pt-5.5 flex gap-3.5 justify-center border-slate-100/10 dark:border-slate-800/80">
+          <div className="w-full mt-5 border-t pt-4 flex gap-3.5 justify-center border-slate-100/10 dark:border-slate-800/80">
             {github ? (
               <a
                 href={github.startsWith('http') ? github : `https://${github}`}
