@@ -47,6 +47,20 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
           errMessage = 'Please enter a valid URL (e.g. https://...).';
         }
       }
+    } else if (name === 'github') {
+      if (value && value.trim() !== '') {
+        const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
+        if (!githubRegex.test(value.trim())) {
+          errMessage = 'Please enter a valid GitHub profile URL (e.g. github.com/username).';
+        }
+      }
+    } else if (name === 'linkedin') {
+      if (value && value.trim() !== '') {
+        const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+        if (!linkedinRegex.test(value.trim())) {
+          errMessage = 'Please enter a valid LinkedIn profile URL (e.g. linkedin.com/in/username).';
+        }
+      }
     }
 
     setErrors(prev => ({
@@ -83,6 +97,18 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
         new URL(formData.imageUrl);
       } catch (_) {
         newErrors.imageUrl = 'Please enter a valid URL.';
+      }
+    }
+    if (formData.github && formData.github.trim() !== '') {
+      const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
+      if (!githubRegex.test(formData.github.trim())) {
+        newErrors.github = 'Please enter a valid GitHub profile URL.';
+      }
+    }
+    if (formData.linkedin && formData.linkedin.trim() !== '') {
+      const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+      if (!linkedinRegex.test(formData.linkedin.trim())) {
+        newErrors.linkedin = 'Please enter a valid LinkedIn profile URL.';
       }
     }
 
@@ -226,9 +252,17 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
               name="github"
               value={formData.github}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="github.com/username"
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-violet-500/10 focus:border-violet-600 bg-white"
+              className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 ${
+                errors.github && touched.github
+                  ? 'border-rose-300 focus:ring-rose-500/10 focus:border-rose-500 bg-rose-50/10'
+                  : 'border-slate-200 focus:ring-violet-500/10 focus:border-violet-600 bg-white'
+              }`}
             />
+            {errors.github && touched.github && (
+              <p className="mt-1.5 text-xs text-rose-500 font-semibold animate-fadeIn">{errors.github}</p>
+            )}
           </div>
 
           {/* LinkedIn Link */}
@@ -242,9 +276,17 @@ export default function ProfileForm({ initialValues, onFormChange, onSubmit, isS
               name="linkedin"
               value={formData.linkedin}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="linkedin.com/in/username"
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-violet-500/10 focus:border-violet-600 bg-white"
+              className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-4 ${
+                errors.linkedin && touched.linkedin
+                  ? 'border-rose-300 focus:ring-rose-500/10 focus:border-rose-500 bg-rose-50/10'
+                  : 'border-slate-200 focus:ring-violet-500/10 focus:border-violet-600 bg-white'
+              }`}
             />
+            {errors.linkedin && touched.linkedin && (
+              <p className="mt-1.5 text-xs text-rose-500 font-semibold animate-fadeIn">{errors.linkedin}</p>
+            )}
           </div>
         </div>
       </div>

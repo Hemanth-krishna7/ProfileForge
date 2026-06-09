@@ -25,6 +25,22 @@ export const createProfile = (req, res) => {
     }
   }
 
+  // Validate GitHub URL if provided
+  if (github && github.trim() !== '') {
+    const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
+    if (!githubRegex.test(github.trim())) {
+      errors.github = 'Please enter a valid GitHub profile URL.';
+    }
+  }
+
+  // Validate LinkedIn URL if provided
+  if (linkedin && linkedin.trim() !== '') {
+    const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+    if (!linkedinRegex.test(linkedin.trim())) {
+      errors.linkedin = 'Please enter a valid LinkedIn profile URL.';
+    }
+  }
+
   // If validation errors exist, return 400 Bad Request
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({
@@ -35,15 +51,19 @@ export const createProfile = (req, res) => {
   }
 
   // 2. Processing data
-  // Split skills by comma, trim whitespace, and filter out empty items
+  // Split skills by comma, trim whitespace, deduplicate, and filter out empty items
   let processedSkills = [];
   if (skills && typeof skills === 'string') {
-    processedSkills = skills
-      .split(',')
-      .map(skill => skill.trim())
-      .filter(skill => skill.length > 0);
+    processedSkills = Array.from(new Set(
+      skills
+        .split(',')
+        .map(skill => skill.trim())
+        .filter(skill => skill.length > 0)
+    ));
   } else if (Array.isArray(skills)) {
-    processedSkills = skills.map(skill => String(skill).trim()).filter(Boolean);
+    processedSkills = Array.from(new Set(
+      skills.map(skill => String(skill).trim()).filter(Boolean)
+    ));
   }
 
   // Helper function to sanitize and ensure URLs have protocols

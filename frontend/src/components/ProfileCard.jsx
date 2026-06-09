@@ -7,24 +7,41 @@ import React from 'react';
 export default function ProfileCard({ data, isPreview = false }) {
   const { name, bio, imageUrl, skills, github, linkedin, theme } = data;
 
+  const [imageError, setImageError] = React.useState(false);
+
+  React.useEffect(() => {
+    setImageError(false);
+  }, [imageUrl]);
+
   // Authentic placeholder states for empty fields
   const displayName = name || 'Your Name';
   const displayBio = bio || 'Your professional bio will appear here.';
   
-  // Normalize skills into an array of strings
+  // Normalize skills into an array of strings with deduplication
   let skillArray = [];
   if (Array.isArray(skills)) {
-    skillArray = skills;
+    skillArray = Array.from(new Set(skills.map(s => s.trim()).filter(Boolean)));
   } else if (typeof skills === 'string' && skills.trim().length > 0) {
-    skillArray = skills
-      .split(',')
-      .map(s => s.trim())
-      .filter(s => s.length > 0);
+    skillArray = Array.from(new Set(
+      skills
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s.length > 0)
+    ));
   }
 
   const isDark = theme === 'dark';
   const hasSkills = skillArray.length > 0;
-  const showSocial = github || linkedin;
+
+  // Validate social URLs so they are only displayed if they pass the regex check
+  const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
+  const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+
+  const validGithub = github && github.trim() !== '' && githubRegex.test(github.trim()) ? github.trim() : '';
+  const validLinkedin = linkedin && linkedin.trim() !== '' && linkedinRegex.test(linkedin.trim()) ? linkedin.trim() : '';
+
+  const showSocial = validGithub || validLinkedin;
+  const showImage = imageUrl && !imageError;
 
   return (
     <div className="relative group w-full max-w-[360px] mx-auto transition-all duration-300 hover:-translate-y-1 hover:scale-[1.005] animate-fadeIn">
@@ -66,33 +83,30 @@ export default function ProfileCard({ data, isPreview = false }) {
           <div className="absolute -inset-0.5 rounded-full bg-white dark:bg-slate-950 z-0"></div>
 
           {/* Avatar Area */}
-          {imageUrl ? (
+          {showImage ? (
             <img
               src={imageUrl}
               alt={displayName}
-              onError={(e) => {
-                e.target.style.display = 'none';
-                const sibling = e.target.nextSibling;
-                if (sibling) sibling.style.display = 'flex';
-              }}
+              onError={() => setImageError(true)}
               className="relative w-26 h-26 rounded-full object-cover z-10 border-2 border-transparent"
             />
           ) : null}
 
           {/* Neutral Avatar Placeholder Icon - No text inside or below */}
-          <div 
-            style={{ display: imageUrl ? 'none' : 'flex' }}
-            className={`relative w-26 h-26 rounded-full flex flex-col items-center justify-center z-10 border border-dashed ${
-              isDark 
-                ? 'border-slate-800 bg-slate-900/60 text-slate-500' 
-                : 'border-slate-300 bg-slate-100/60 text-slate-400'
-            }`}
-          >
-            {/* User SVG silhouette (large user icon) */}
-            <svg className="w-11 h-11 opacity-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          </div>
+          {!showImage && (
+            <div 
+              className={`relative w-26 h-26 rounded-full flex flex-col items-center justify-center z-10 border border-dashed ${
+                isDark 
+                  ? 'border-slate-800 bg-slate-900/60 text-slate-500' 
+                  : 'border-slate-300 bg-slate-100/60 text-slate-400'
+              }`}
+            >
+              {/* User SVG silhouette (large user icon) */}
+              <svg className="w-11 h-11 opacity-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+          )}
         </div>
 
         {/* Name */}
@@ -147,9 +161,9 @@ export default function ProfileCard({ data, isPreview = false }) {
         {/* Action Button Links - Conditionally rendered only if links are supplied */}
         {showSocial && (
           <div className="w-full mt-5 border-t pt-4 flex gap-3.5 justify-center border-slate-100/10 dark:border-slate-800/80">
-            {github ? (
+            {validGithub ? (
               <a
-                href={github.startsWith('http') ? github : `https://${github}`}
+                href={validGithub.startsWith('http') ? validGithub : `https://${validGithub}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 ${
@@ -165,9 +179,9 @@ export default function ProfileCard({ data, isPreview = false }) {
               </a>
             ) : null}
 
-            {linkedin ? (
+            {validLinkedin ? (
               <a
-                href={linkedin.startsWith('http') ? linkedin : `https://${linkedin}`}
+                href={validLinkedin.startsWith('http') ? validLinkedin : `https://${validLinkedin}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 ${
