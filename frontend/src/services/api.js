@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://profileforge-tnhy.onrender.com/api';
 
 /**
  * Sends profile form data to the backend for validation and formatting.
