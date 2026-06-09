@@ -1,60 +1,31 @@
 # ProfileForge
 
-A modern, full-stack developer profile card generator where users can fill in details to create and preview professional profile cards in real-time.
+ProfileForge is a full-stack web application that helps users create professional profile cards through a simple and interactive interface. Users can add their details, skills, profile image, and social links while previewing changes in real time.
 
----
+<img width="2560" height="1328" alt="image" src="https://github.com/user-attachments/assets/5a5955ab-9e1e-4595-b89e-0cca987031de" />
 
-## Features
-- **Live Preview**: Card updates instantly in the preview panel as the user types.
-- **Theme Selection**: Seamlessly toggle between Light and Dark themes.
-- **Backend Validation**: Processes comma-separated skills, sanitizes URLs, and validates inputs.
-- **Polished UX**: Embedded loading spinner, styled validation error banners, and success feedback.
+### Live Demo
 
----
+Frontend: https://profile-forge-six.vercel.app
 
-## Prerequisites
-Ensure you have **Node.js** (version 18 or above) installed on your system.
+### Features
 
----
+* Real-time profile card preview
+* Light and Dark theme support
+* Profile image integration with fallback handling
+* Skill tag generation with duplicate removal
+* GitHub and LinkedIn profile validation
+* Responsive design for desktop and mobile devices
+* Clean and modern user interface
 
-## How to Run
+### Tech Stack
 
-Follow these steps to launch the application:
+**Frontend:** React, Vite, Tailwind CSS
 
-### 1. Run the Backend Server
-1. Open a new terminal window or command prompt.
-2. Navigate to the `backend/` folder:
-   ```bash
-   cd backend
-   ```
-3. (Optional) Install dependencies (if not already completed):
-   ```bash
-   npm install
-   ```
-4. Start the Express server:
-   ```bash
-   npm start
-   ```
-   *The backend API will run on `http://localhost:5000`.*
+**Backend:** Node.js, Express.js
 
-### 2. Run the Frontend Client
-1. Open a separate terminal window or command prompt.
-2. Navigate to the `frontend/` folder:
-   ```bash
-   cd frontend
-   ```
-3. (Optional) Install dependencies (if not already completed):
-   ```bash
-   npm install
-   ```
-4. Start the Vite React development server:
-   ```bash
-   npm run dev
-   ```
-   *The frontend client will open on `http://localhost:5173`.*
+**Deployment:** Vercel, Render
 
----
+### Overview
 
-## Technical Stack
-- **Frontend**: React, Tailwind CSS v4, Vite, HTML5 (with SEO title/meta-description)
-- **Backend**: Node.js, Express.js, CORS, Dotenv
+ProfileForge simplifies the process of creating a polished digital profile by combining live preview, validation, and responsive design into a single seamless experience.
