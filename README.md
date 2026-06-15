@@ -4,7 +4,7 @@ ProfileForge is a full-stack web application that helps users create professiona
 
 <img width="2560" height="1328" alt="image" src="https://github.com/user-attachments/assets/5a5955ab-9e1e-4595-b89e-0cca987031de" />
 
-### Live Demo:-
+### Live Demo
 
 Frontend: https://profile-forge-six.vercel.app
 
